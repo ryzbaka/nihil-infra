@@ -1,0 +1,56 @@
+title: Dialogue
+position: -174,5
+---
+<<if $saidBye>>
+    <<set $greeting to "Hello again, Yarn">>
+<<else>>
+    <<set $greeting to "Hello, Yarn!">>
+<<endif>>
+Companion: {$greeting} 
+Companion: This is as basic dialogue line.
+Player: Awesome this is great!
+Companion: ...
+Companion: Indeed.
+<<jump Options>>
+===
+title: Options
+position: 140,-118
+---
+Companion: Hi there! What do you feel like doing today?
+
+-> Player: I want to go swimming.
+    <<set $tripChoice to "swimming">>
+    Companion: Okay, let's go swimming.
+    Companion: Where do you want to swim?
+    -> Player: The lake!
+        <<set $tripLocation to "lake">>
+        Companion: Nice! It's a great day for it.
+    -> Player: The swimming pool!
+        <<set $tripLocation to "pool">>
+        Companion: Oh, awesome! I heard they installed a new slide.
+-> Player: I'd prefer to go hiking.
+    <<set $tripChoice to "hiking">>
+    <<set $tripLocation to "mountain">>
+    Companion: Cool, we'll go hiking then.
+Player: Sounds good!
+Companion: {$tripLocation} at {$tripChoice} //variables get flipped for some reason
+<<jump CompanionLoop>>
+===
+title: CompanionLoop
+position: -164,-230
+---
+Companion: Anything else?
+-> Player: What are you doing here?
+    <<if $askedDoing>>
+        Companion: Haven't you asked me that already?
+    <<else>>
+        Companion: Nothing. I'm doing nothing.
+        Player: Oh.
+        <<set $askedDoing to true>>
+    <<endif>>
+    <<jump CompanionLoop>>
+-> Player: Nope, I'll be off now.
+    Companion: Okay. Cool.
+    <<set $saidBye to true>>
+    <<jump Dialogue>>
+===
